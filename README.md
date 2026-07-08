@@ -388,3 +388,6 @@ Old chats do not show:
 - Add authentication before deploying publicly.
 - Add better error messages in the frontend UI.
 - Add deployment instructions for frontend and backend.
+
+##
+Live : `https://shubhamgpt-1.onrender.com/`
