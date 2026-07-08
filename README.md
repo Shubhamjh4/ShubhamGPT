@@ -2,6 +2,8 @@
 
 ShubhamGPT is a full-stack chat application inspired by ChatGPT. The frontend is built with React and Vite, and the backend is built with Express, MongoDB/Mongoose, and the Gemini API. Users can start a new chat, send prompts, receive AI replies, view previous chat threads, switch between threads, and delete old threads.
 
+Live : `https://shubhamgpt-1.onrender.com/`
+
 ## Project Structure
 
 ```text
