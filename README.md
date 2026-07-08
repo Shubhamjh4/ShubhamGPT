@@ -232,7 +232,7 @@ These values are shared through `MyContext`.
 
 ## Important Implementation Notes
 
-- The frontend currently uses hard-coded API URLs like `http://localhost:5000/api/chat`.
+- The frontend API base URL comes from `VITE_API_BASE_URL`, with local fallback `http://localhost:5000`.
 - The backend port is hard-coded as `5000` in `Backend/server.js`.
 - The helper file is named `Backend/utils/openai.js`, but the active code calls the Gemini API.
 - There is commented OpenAI code in `utils/openai.js` and `server.js`; the current working provider is Gemini.
@@ -342,10 +342,16 @@ Build Command: npm install && npm run build
 Publish Directory: dist
 ```
 
-Important: the frontend currently calls `http://localhost:5000`. Before deploying the frontend, replace those local API URLs with your Render backend URL, for example:
+Frontend environment variable to add in Render:
 
 ```text
-https://your-backend-service.onrender.com
+VITE_API_BASE_URL=https://your-backend-service.onrender.com
+```
+
+For this project, the current backend URL is:
+
+```text
+VITE_API_BASE_URL=https://shubhamgpt.onrender.com
 ```
 
 ## Common Problems
