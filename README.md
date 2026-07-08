@@ -314,6 +314,40 @@ git rm --cached Backend/.env
 git commit -m "Stop tracking env file"
 ```
 
+## Deploying On Render
+
+Recommended setup: deploy the backend as a Render Web Service and the frontend as a Render Static Site.
+
+Backend Web Service:
+
+```text
+Root Directory: Backend
+Build Command: npm install
+Start Command: npm start
+```
+
+Backend environment variables to add in Render:
+
+```text
+MONGODB_URI
+GEMINI_API_KEY
+GEMINI_MODEL
+```
+
+Frontend Static Site:
+
+```text
+Root Directory: Frontend
+Build Command: npm install && npm run build
+Publish Directory: dist
+```
+
+Important: the frontend currently calls `http://localhost:5000`. Before deploying the frontend, replace those local API URLs with your Render backend URL, for example:
+
+```text
+https://your-backend-service.onrender.com
+```
+
 ## Common Problems
 
 Backend says `GEMINI_API_KEY is missing in .env`:
