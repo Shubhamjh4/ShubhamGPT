@@ -6,12 +6,27 @@ import { API_BASE_URL } from "./config.js";
 import shubhamLogo from "./assets/shubhamjh4.jpg";
 
 function Sidebar() {
-    const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
+    const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats, token} = useContext(MyContext);
 
     const getAllThreads = async () => {
+        if(!token) {
+            setAllThreads([]);
+            return;
+        }
+
         try {
-            const response = await fetch(`${API_BASE_URL}/api/thread`);
+            const response = await fetch(`${API_BASE_URL}/api/thread`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             const res = await response.json();
+
+            if(!response.ok || !Array.isArray(res)) {
+                setAllThreads([]);
+                return;
+            }
+
             const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
             //console.log(filteredData);
             setAllThreads(filteredData);
@@ -22,7 +37,7 @@ function Sidebar() {
 
     useEffect(() => {
         getAllThreads();
-    }, [currThreadId])
+    }, [currThreadId, token])
 
 
     const createNewChat = () => {
@@ -37,8 +52,15 @@ function Sidebar() {
         setCurrThreadId(newThreadId);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/thread/${newThreadId}`);
+            const response = await fetch(`${API_BASE_URL}/api/thread/${newThreadId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             const res = await response.json();
+
+            if(!response.ok) return;
+
             console.log(res);
             setPrevChats(res);
             setNewChat(false);
@@ -50,8 +72,16 @@ function Sidebar() {
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/thread/${threadId}`, {method: "DELETE"});
+            const response = await fetch(`${API_BASE_URL}/api/thread/${threadId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             const res = await response.json();
+
+            if(!response.ok) return;
+
             console.log(res);
 
             //updated threads re-render

@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from 'mongoose';
 import chatRoutes from "./routes/chat.js"
+import authRoutes from "./routes/auth.js";
 
 
 
@@ -32,6 +33,7 @@ const connectDB = async() => {
     }
 }
 
+app.use('/api/auth', authRoutes);
 app.use('/api',chatRoutes);
 
 app.listen(PORT,()=>{
